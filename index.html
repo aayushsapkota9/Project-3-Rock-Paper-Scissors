@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><Rock-Paper-Scissors></Rock-Paper-Scissors></title>
+</head>
+
+<body>
+    <script>
+        function getComputerChoice() {
+
+            let a = Math.floor(Math.random() * 3) + 1;
+            if (a == 1) {
+                return "rock";
+            }
+            else if (a == 2) {
+                return "paper";
+            }
+            else {
+                return "scissors";
+            }
+        }
+        function playRound(computerSelection, playerSelection) {
+                    if (computerSelection == playerSelection) {return ("Draw");}
+                    else if (computerSelection == "rock" && playerSelection == "paper") { return "Win"; }
+                    else if (computerSelection == "paper" && playerSelection == "rock") { return "Loose"; }
+                    else if (computerSelection == "scissors" && playerSelection == "rock") { return "Win"; }
+                    else if (computerSelection == "rock" && playerSelection == "scissors") { return "Loose"; }
+                    else if (computerSelection == "paper" && playerSelection == "scissors") { return "Win"; }
+                    else if (computerSelection == "scissors" && playerSelection == "paper") { return "Loose"; }
+                    else {return "Draw";}
+                    
+                }
+        function game(computerSelection, playerSelection) {
+            let compCount=0;
+            let playerCount=0;
+            for(let i=0;i<5;i++)
+            {
+                let playerSelection = prompt("Enter Rock paper or Scissors");
+                playerSelection = playerSelection.toLowerCase();
+                const computerSelection = getComputerChoice();
+                console.log(computerSelection, playerSelection);
+                console.log(playRound(computerSelection,playerSelection));
+                if(playRound(computerSelection,playerSelection)=="Win")
+                {
+                    playerCount++;
+                }
+                else if(playRound(computerSelection,playerSelection)=="Loose")
+                {
+                    compCount++;
+                }
+                
+                
+            }
+            console.log(`Your Score is ${playerCount}`);
+            if(playerCount>compCount)
+            {
+                console.log("You won the match in overall 5 rounds");
+            }
+            else if(compCount==playerCount){
+                console.log("The match was draw in overall 5 rounds");
+            }
+            else{
+                console.log("You lost the match in overall 5 rounds");
+            }
+        }
+        game();
+
+    </script>
+</body>
+
+</html>
