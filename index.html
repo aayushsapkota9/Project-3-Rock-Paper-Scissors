@@ -9,6 +9,18 @@
 </head>
 
 <body>
+    <h3>Rock Paper Scissors</h3>
+    <div>
+        <!-- <div>Total: <span id="totalGames">0</span></div> -->
+        <div>Computer:<span id="compScore">0</span></div>
+        <div>User:<span id="userScore">0</span></div>
+        <div>You:<span id="score"></span></div>
+
+    </div>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+
     <script>
         function getComputerChoice() {
 
@@ -24,50 +36,85 @@
             }
         }
         function playRound(computerSelection, playerSelection) {
-                    if (computerSelection == playerSelection) {return ("Draw");}
-                    else if (computerSelection == "rock" && playerSelection == "paper") { return "Win"; }
-                    else if (computerSelection == "paper" && playerSelection == "rock") { return "Loose"; }
-                    else if (computerSelection == "scissors" && playerSelection == "rock") { return "Win"; }
-                    else if (computerSelection == "rock" && playerSelection == "scissors") { return "Loose"; }
-                    else if (computerSelection == "paper" && playerSelection == "scissors") { return "Win"; }
-                    else if (computerSelection == "scissors" && playerSelection == "paper") { return "Loose"; }
-                    else {return "Draw";}
-                    
-                }
-        function game(computerSelection, playerSelection) {
-            let compCount=0;
-            let playerCount=0;
-            for(let i=0;i<5;i++)
-            {
-                let playerSelection = prompt("Enter Rock paper or Scissors");
-                playerSelection = playerSelection.toLowerCase();
-                const computerSelection = getComputerChoice();
-                console.log(computerSelection, playerSelection);
-                console.log(playRound(computerSelection,playerSelection));
-                if(playRound(computerSelection,playerSelection)=="Win")
-                {
-                    playerCount++;
-                }
-                else if(playRound(computerSelection,playerSelection)=="Loose")
-                {
-                    compCount++;
-                }
-                
-                
-            }
-            console.log(`Your Score is ${playerCount}`);
-            if(playerCount>compCount)
-            {
-                console.log("You won the match in overall 5 rounds");
-            }
-            else if(compCount==playerCount){
-                console.log("The match was draw in overall 5 rounds");
-            }
-            else{
-                console.log("You lost the match in overall 5 rounds");
+            if (computerSelection == playerSelection) { return ("Draw"); }
+            else if (computerSelection == "rock" && playerSelection == "paper") { return "Win"; }
+            else if (computerSelection == "paper" && playerSelection == "rock") { return "Loose"; }
+            else if (computerSelection == "scissors" && playerSelection == "rock") { return "Win"; }
+            else if (computerSelection == "rock" && playerSelection == "scissors") { return "Loose"; }
+            else if (computerSelection == "paper" && playerSelection == "scissors") { return "Win"; }
+            else if (computerSelection == "scissors" && playerSelection == "paper") { return "Loose"; }
+            else { return "Draw"; }
+
+        }
+        function fetchToPlayRound(choice, gameCount) {
+            let playerSelection = choice;
+            const computerSelection = getComputerChoice();
+            check = playRound(computerSelection, playerSelection);
+            console.log(check);
+            console.log("computer choice is")
+            console.log(computerSelection);
+            console.log("player choice is")
+            console.log(playerSelection);
+            if (check == "Win") { userWinCount++; } else { compWinCount++; }
+
+            const userScore = document.querySelector('#userScore');
+            const compScore = document.querySelector('#compScore');
+            const score = document.querySelector('#score');
+            score.textContent = check;
+            // const totalGames=document.querySelector('#totalGames');
+            // totalGames.innerHTML=gameCount;
+            userScore.innerHTML = userWinCount;
+            compScore.innerHTML = compWinCount;
+            if (userWinCount == 5) {
+                setTimeout(() => {
+                    if(userWinCount>compWinCount)
+                    {
+                        alert("You won")
+                    }
+                    else if(userWinCount<compWinCount
+                    ){
+                        alert("You Lost")
+                    }
+                    else{
+                        alert("It's a draw")
+                    }
+                    location.reload();
+                }, 2000);
             }
         }
-        game();
+
+
+
+
+        function eventGame(gameCount) {
+
+
+            const rockBtn = document.querySelector('#rock');
+            const paperBtn = document.querySelector('#paper');
+            const scissorsBtn = document.querySelector('#scissors');
+            rockBtn.addEventListener('click', () => {
+                if (userWinCount < noOfRounds) { fetchToPlayRound('rock'); gameCount++; }
+            });
+            paperBtn.addEventListener('click', () => {
+                if (userWinCount < noOfRounds) { fetchToPlayRound('paper'); gameCount++; }
+            });
+            scissorsBtn.addEventListener('click', () => {
+                if (userWinCount < noOfRounds) { fetchToPlayRound('scissors'); gameCount++; }
+            });
+
+        }
+
+        let userWinCount = 0;
+        let compWinCount = 0;
+        let gameCount = 0;
+        noOfRounds = 5;
+        eventGame(gameCount);
+
+
+
+
+
+
 
     </script>
 </body>
